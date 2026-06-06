@@ -7,7 +7,6 @@ setup(
     install_requires=[
         "rich",
         "requests",
-        "openai",
         "python-dotenv",
         "prompt_toolkit",
     ],

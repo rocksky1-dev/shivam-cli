@@ -1,16 +1,13 @@
 import os
 import json
 import requests
-from openai import OpenAI
 from typing import List, Dict, Any
 
 class ShivamAgent:
     def __init__(self, api_key: str, model_id: str):
-        self.client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=api_key,
-        )
+        self.api_key = api_key
         self.model_id = model_id
+        self.base_url = "https://openrouter.ai/api/v1/chat/completions"
         self.memory_file = "shivam_memory.json"
         self.history = self._load_memory()
 
@@ -30,16 +27,27 @@ class ShivamAgent:
     def chat(self, message: str):
         self.history.append({"role": "user", "content": message})
         
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/rocksky1-dev/shivam-cli", # Optional
+            "X-Title": "SHIVAM CLI", # Optional
+        }
+        
+        payload = {
+            "model": self.model_id,
+            "messages": [
+                {"role": "system", "content": "You are SHIVAM CLI, an Ultra Instinct AI Agent. You are highly autonomous, capable of planning, verifying, and executing complex tasks like building 3D websites, apps, and full-stack projects. You output high-quality code and can package them into .zip files."},
+                *self.history
+            ]
+        }
+        
         try:
-            response = self.client.chat.completions.create(
-                model=self.model_id,
-                messages=[
-                    {"role": "system", "content": "You are SHIVAM CLI, an Ultra Instinct AI Agent. You are highly autonomous, capable of planning, verifying, and executing complex tasks like building 3D websites, apps, and full-stack projects. You output high-quality code and can package them into .zip files."},
-                    *self.history
-                ]
-            )
+            response = requests.post(self.base_url, headers=headers, data=json.dumps(payload))
+            response.raise_for_status()
+            data = response.json()
             
-            ai_message = response.choices[0].message.content
+            ai_message = data['choices'][0]['message']['content']
             self.history.append({"role": "assistant", "content": ai_message})
             self._save_memory()
             return ai_message
