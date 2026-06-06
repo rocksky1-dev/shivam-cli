@@ -12,6 +12,8 @@ console = Console()
 
 def get_header():
     ascii_art = """
+   ⚡ INITIATING  SHIVAM CLI - ULTRA INSTINCT MODE...
+   
    ███████╗██╗  ██╗██╗██╗   ██╗ █████╗ ███╗   ███╗     ██████╗██╗     ██╗
    ██╔════╝██║  ██║██║██║   ██║██╔══██╗████╗ ████║    ██╔════╝██║     ██║
    ███████╗███████║██║██║   ██║███████║██╔████╔██║    ██║     ██║     ██║
@@ -20,8 +22,8 @@ def get_header():
    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝  ╚═╝  ╚═╝╚═╝     ╚═╝     ╚═════╝╚══════╝╚═╝
     """
     header_text = Text(ascii_art, style="bold magenta")
-    header_text.append("\nULTRA INSTINCT AGENT | Model: OpenRouter LLM", style="cyan")
-    return Panel(header_text, border_style="bright_blue")
+    header_text.append("\n   ULTRA INSTINCT AGENT | Model: OpenRouter LLM", style="cyan")
+    return Panel(header_text, border_style="bright_blue", padding=(0, 2))
 
 def get_execution_matrix(tasks=None):
     table = Table(title="🧠 AI EXECUTION MATRIX", border_style="magenta", expand=True)
@@ -95,17 +97,23 @@ def create_layout():
         Layout(name="header", size=10),
         Layout(name="body")
     )
+    
+    # Body split into left (main content) and right (commands)
     layout["body"].split_row(
-        Layout(name="left"),
-        Layout(name="right", size=40)
+        Layout(name="left", ratio=2),
+        Layout(name="right", size=35)
     )
+    
+    # Left side split into matrix (top) and status (bottom)
     layout["left"].split_column(
-        Layout(name="matrix", size=12),
-        Layout(name="status_row")
+        Layout(name="matrix", size=10),
+        Layout(name="status_row", size=10)
     )
+    
+    # Status row split into status and stats
     layout["status_row"].split_row(
-        Layout(name="status"),
-        Layout(name="stats")
+        Layout(name="status", ratio=1),
+        Layout(name="stats", ratio=1)
     )
     
     layout["header"].update(get_header())
