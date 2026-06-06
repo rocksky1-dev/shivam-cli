@@ -74,7 +74,7 @@ def main():
                 console.print(create_layout())
             
             else:
-                with console.status("[bold cyan]Shivam is thinking...", spinner="pixel"):
+                with console.status("[bold cyan]Shivam is thinking...", spinner="dots"):
                     response = agent.chat(user_input)
                 console.print(Panel(response, title="SHIVAM AI RESPONSE", border_style="green"))
 
