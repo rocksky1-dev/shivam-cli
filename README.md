@@ -1,53 +1,58 @@
-# 🤖 SHIVAM CLI - ULTRA INSTINCT MODE
+# 🤖 SHIVAM CLI - ULTRA INSTINCT AGENTIC IDE
 
-SHIVAM CLI is a powerful, autonomous AI agent designed to build anything from 3D websites to complex applications directly from your terminal. Inspired by high-performance agents like Claude Code and Antigravity, it features a stunning cyberpunk UI and leverages OpenRouter for state-of-the-art LLM capabilities.
+SHIVAM CLI is a powerful, autonomous AI agentic IDE designed for mobile (Termux) and PC. It plans, writes, and verifies code for 3D websites, apps, and full-stack projects using state-of-the-art LLMs via various providers.
 
 ## 🚀 Features
 
-- **Cyberpunk Terminal UI**: Beautifully designed interface using the `Rich` library.
-- **Autonomous Building**: Use `/goal <idea>` to let Shivam CLI plan, write, and verify your projects.
-- **OpenRouter Integration**: Connect to any model (Claude 3.5 Sonnet, GPT-4o, etc.) via OpenRouter.
-- **Full-Stack Capability**: Builds 3D websites, apps, and more in any framework.
-- **Project Packaging**: Automatically zips your projects for easy sharing.
-- **Task Verification**: Self-correcting logic to ensure code quality.
+- **Mobile Optimized UI**: Sleek, responsive interface with a cute AI bot face.
+- **Multi-Provider Support**: Integrated with OpenRouter, Gemini, OpenAI, Anthropic, Nvidia, and HuggingFace.
+- **Agentic Planning**: Real-time execution plan tracking for autonomous builds.
+- **3D Specialist**: Built-in support for Three.js and modern web frameworks.
+- **Cross-Platform**: Works perfectly on Termux (Android), Windows, Linux, and macOS.
 
 ## 🛠️ Installation
 
+### 📱 On Termux (Android)
+1. Install Python and Git:
+   ```bash
+   pkg update && pkg upgrade
+   pkg install python git
+   ```
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/rocksky1-dev/shivam-cli.git
+   cd shivam-cli
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -e .
+   ```
+4. Run SHIVAM CLI:
+   ```bash
+   shivam
+   ```
+
+### 💻 On PC (Windows/Linux/macOS)
 1. Clone the repository:
    ```bash
    git clone https://github.com/rocksky1-dev/shivam-cli.git
    cd shivam-cli
    ```
-
-2. Install the package:
+2. Install:
    ```bash
    pip install -e .
    ```
-
-3. Set up your environment:
-   Create a `.env` file or export your API key:
+3. Run:
    ```bash
-   export OPENROUTER_API_KEY='your_api_key_here'
-   export MODEL_ID='anthropic/claude-3.5-sonnet'
+   shivam
    ```
 
-## 🎮 Usage
-
-Run the CLI:
-```bash
-shivam
-```
-
-### Commands:
+## 🎮 Usage Commands
 - `/goal <idea>`: Start an autonomous build process.
-- `/chat`: Chat with the AI.
-- `/status`: View system status and UI.
-- `/memory`: Check the agent's memory.
+- `/chat <msg>`: Chat with the AI agent.
+- `/config`: Open the API setup wizard.
+- `/clear`: Reset the terminal view.
 - `/exit`: Close the CLI.
 
-## 🌈 UI Preview
-
-The CLI features a matrix-style execution view, real-time system status, and a dedicated command center.
-
 ---
-Built with ❤️ by Shivam
+**Made By Shivam Kumar 🇮🇳**

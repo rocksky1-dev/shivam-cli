@@ -41,7 +41,17 @@ def main():
             if not user_input: continue
             if user_input.lower() == '/exit': break
             
-            if user_input.lower() == '/config':
+            if user_input.lower() == '/api':
+                config = setup_wizard()
+                agent = ShivamAgent(config.get("api_key"), config.get("model"))
+                console.clear()
+                console.print(create_layout(config=config))
+                continue
+                
+            if user_input.lower() == '/logout':
+                from core.config import clear_config
+                config = clear_config()
+                console.print("[bold red]Logged out. Configuration cleared.[/]")
                 config = setup_wizard()
                 agent = ShivamAgent(config.get("api_key"), config.get("model"))
                 console.clear()

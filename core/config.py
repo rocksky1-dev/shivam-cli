@@ -19,6 +19,11 @@ def save_config(config):
     with open(CONFIG_FILE, "w") as f:
         json.dump(config, f, indent=4)
 
+def clear_config():
+    if os.path.exists(CONFIG_FILE):
+        os.remove(CONFIG_FILE)
+    return {}
+
 def setup_wizard():
     console.clear()
     console.print(Panel.fit("🛠️ SHIVAM CLI SETUP WIZARD", style="bold magenta"))
