@@ -4,104 +4,119 @@ from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
+from rich.align import Align
 
 console = Console()
 
-def get_header():
-    # More compact and professional header for mobile/desktop
-    header_text = Text()
-    header_text.append("⚡ SHIVAM CLI - ULTRA INSTINCT MODE\n", style="bold magenta italic")
-    header_text.append("█▀ █░█ █ █░█ ▄▀█ █▀▄▀█   █▀▀ █░░ █\n", style="bold cyan")
-    header_text.append("▄█ █▀█ █ ▀▄▀ █▀█ █░▀░█   █▄▄ █▄▄ █\n", style="bold cyan")
-    header_text.append("\n[ AGENTIC IDE | MODEL: OPENROUTER ]", style="bold white on blue")
-    return Panel(header_text, border_style="bright_blue", padding=(0, 1))
+def get_bot_face():
+    # Cute AI Bot Face with gradients
+    face = """
+      .---.
+     /     \\
+    | (o)(o) |
+    |   ▲   |
+     \\  -  /
+      '---'
+    """
+    bot = Text()
+    bot.append("    ╭─────────────╮\n", style="bold magenta")
+    bot.append("    │   ^ ___ ^   │\n", style="bold cyan")
+    bot.append("    │  ( o   o )  │\n", style="bold cyan")
+    bot.append("    │   (  -  )   │\n", style="bold cyan")
+    bot.append("    ╰─────┬───────╯\n", style="bold magenta")
+    bot.append("          ▼", style="bold magenta")
+    return Align.center(bot)
 
-def get_execution_matrix(tasks=None):
-    table = Table(border_style="magenta", expand=True, box=None)
-    table.add_column("TYPE", style="yellow", width=8)
-    table.add_column("TARGET", style="green")
-    table.add_column("DESC", style="white")
+def get_header():
+    header = Text()
+    header.append("🚀 SHIVAM CLI v2.0 - ULTRA INSTINCT\n", style="bold italic magenta")
+    header.append("───────────────────────────────────\n", style="dim white")
+    header.append("   [ ADVANCED AGENTIC IDE ]\n", style="bold white on blue")
+    header.append("   Made By Shivam Kumar 🇮🇳", style="italic cyan")
+    return Panel(Align.center(header), border_style="bright_blue", padding=(1, 2))
+
+def get_execution_plan(tasks=None):
+    # Professional execution plan instead of matrix
+    table = Table(box=None, expand=True)
+    table.add_column("STATUS", style="bold yellow", width=12)
+    table.add_column("ACTION", style="white")
     
     if tasks:
         for task in tasks:
-            table.add_row(task.get('type', ''), task.get('target', ''), task.get('desc', ''))
+            status = "✓ DONE" if task.get('done') else "● PENDING"
+            table.add_row(status, task.get('desc', ''))
     else:
-        table.add_row("FILE", "app.py", "Main entry")
-        table.add_row("CMD", "pip install", "Deps")
-    
-    return Panel(table, title="🧠 MATRIX", border_style="magenta")
+        table.add_row("● READY", "Waiting for your command...")
+        table.add_row("● IDLE", "Systems at 100% capacity")
+        
+    return Panel(table, title="📋 EXECUTION PLAN", border_style="magenta")
 
-def get_system_status():
+def get_system_status(config=None):
     status_text = Text()
-    status_text.append("LINK: ", style="bold cyan")
-    status_text.append("OK\n", style="bright_green")
-    status_text.append("MODE: ", style="bold cyan")
-    status_text.append("ULTRA\n", style="bright_magenta")
-    return Panel(status_text, title="💙 STATUS", border_style="blue")
-
-def get_ultra_instinct_stats():
-    # Simple bars for mobile
-    stats = "CRTV: ████ 100%\nLOGC: ████ 100%"
-    return Panel(stats, title="📊 STATS", border_style="magenta")
+    status_text.append("🤖 AGENT   : ", style="bold cyan")
+    status_text.append("ACTIVE\n", style="bright_green")
+    status_text.append("🧠 MODEL   : ", style="bold cyan")
+    status_text.append(f"{config.get('model', 'Claude-3.5') if config else 'AUTO'}\n", style="bright_magenta")
+    status_text.append("🌐 NETWORK : ", style="bold cyan")
+    status_text.append("SECURE\n", style="bright_blue")
+    return Panel(status_text, title="💙 SYSTEM", border_style="blue")
 
 def get_command_center():
     commands = [
-        ("/goal", "Build"),
-        ("/chat", "Talk"),
-        ("/status", "UI"),
-        ("/clear", "Reset"),
-        ("/exit", "Quit")
+        ("/goal", "Autonomous Build"),
+        ("/chat", "AI Interaction"),
+        ("/config", "API Settings"),
+        ("/clear", "Reset Terminal"),
+        ("/exit", "Shutdown")
     ]
     
     cmd_text = Text()
     for cmd, desc in commands:
-        cmd_text.append(f"{cmd:7} {desc}\n", style="bold cyan")
+        cmd_text.append(f"{cmd:8}", style="bold cyan")
+        cmd_text.append(f" {desc}\n", style="dim white")
         
-    return Panel(cmd_text, title=">_ CMD", border_style="bright_blue")
+    return Panel(cmd_text, title="🎮 COMMANDS", border_style="bright_blue")
 
-def create_layout():
+def create_layout(tasks=None, config=None):
     width = console.width
     layout = Layout()
     
-    # Responsive layout based on terminal width
     if width < 60:
-        # Mobile view: Stack everything vertically
         layout.split_column(
-            Layout(name="header", size=7),
+            Layout(name="bot", size=8),
+            Layout(name="header", size=8),
             Layout(name="body")
         )
         layout["body"].split_column(
-            Layout(name="matrix", size=6),
-            Layout(name="status_row", size=6),
-            Layout(name="right", size=8)
+            Layout(name="plan", size=10),
+            Layout(name="footer", size=8)
         )
-        layout["status_row"].split_row(
+        layout["footer"].split_row(
             Layout(name="status"),
-            Layout(name="stats")
+            Layout(name="right")
         )
     else:
-        # Desktop view: Side-by-side
         layout.split_column(
-            Layout(name="header", size=8),
+            Layout(name="top", size=10),
             Layout(name="body")
+        )
+        layout["top"].split_row(
+            Layout(name="bot", size=25),
+            Layout(name="header")
         )
         layout["body"].split_row(
             Layout(name="left", ratio=2),
             Layout(name="right", size=30)
         )
         layout["left"].split_column(
-            Layout(name="matrix", size=8),
-            Layout(name="status_row", size=6)
-        )
-        layout["status_row"].split_row(
-            Layout(name="status"),
-            Layout(name="stats")
+            Layout(name="plan", size=12),
+            Layout(name="status", size=8)
         )
     
+    layout["bot"].update(get_bot_face())
     layout["header"].update(get_header())
-    layout["matrix"].update(get_execution_matrix())
-    layout["status"].update(get_system_status())
-    layout["stats"].update(get_ultra_instinct_stats())
+    layout["plan"].update(get_execution_plan(tasks))
+    layout["status"].update(get_system_status(config))
     layout["right"].update(get_command_center())
     
     return layout
